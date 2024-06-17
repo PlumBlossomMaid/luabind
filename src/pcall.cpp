@@ -48,7 +48,10 @@ namespace luabind { namespace detail
 
     int resume_impl(lua_State *L, int nargs, int)
     {
-#if LUA_VERSION_NUM >= 502
+#if LUA_VERSION_NUM >= 504
+        int nresults = 0;
+        int res = lua_resume(L, nullptr, nargs, &nresults);
+#elif LUA_VERSION_NUM >= 502
         int res = lua_resume(L, NULL, nargs);
 #else
         int res = lua_resume(L, nargs);
@@ -59,3 +62,4 @@ namespace luabind { namespace detail
     }
 
 }}
+
